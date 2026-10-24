@@ -1,0 +1,11 @@
+const k=require('../lib/core');
+module.exports=async(q,s)=>{const b=q.body||{};if(!b.device||!b.consent)return s.status(400).json({e:1});
+const p=await k.who(q,b),l=k.lang(q),since=new Date(Date.now()-6e4).toISOString();
+const at=await k.sb(`/attempts?player_id=eq.${p.id}&at=gte.${since}&select=at`);
+if(at.length>=6)return s.status(429).json({e:'wait'});
+await k.sb('/attempts',{method:'POST',body:JSON.stringify({player_id:p.id,layer:p.layer})});
+const L=k.L[p.layer-1];if(!L)return s.json({ok:false,v:k.view(p.layer,l)});
+if(k.N(b.a)!==L.a)return s.json({ok:false});
+await k.sb('/solves',{method:'POST',body:JSON.stringify({player_id:p.id,layer:p.layer})});
+await k.sb(`/players?id=eq.${p.id}`,{method:'PATCH',body:JSON.stringify({layer:p.layer+1,nick:b.nick?String(b.nick).slice(0,40):p.nick})});
+s.json({ok:true,total:k.L.length,v:k.view(p.layer+1,l)});};

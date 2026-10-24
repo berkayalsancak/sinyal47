@@ -1,0 +1,33 @@
+<!doctype html><html lang=tr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Sinyal 47</title><style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 20%,#1c1c1f,#050506 75%);color:#e8e4d8;font:17px/1.7 Georgia,serif;display:grid;place-items:center}
+main{width:min(680px,100%);padding:32px 22px 90px;text-align:center}svg{width:min(300px,70vw);filter:drop-shadow(0 0 22px #b3202a55)}
+h1{font:700 clamp(34px,9vw,60px)/1 Georgia,serif;letter-spacing:.04em;margin:8px 0 4px}h1 b{color:#b3202a}
+.t{font:15px ui-monospace,Consolas,monospace;color:#8f8a7a}.n{background:#cbbf9f;color:#1b1710;padding:22px 24px;margin:28px auto;text-align:left;transform:rotate(-.6deg);box-shadow:0 8px 30px #000;white-space:pre-wrap;font:16px/1.7 ui-monospace,Consolas,monospace}
+.n h2{margin:0 0 10px;font:italic 22px Georgia,serif}form{display:flex;gap:8px}input{flex:1;min-width:0;background:#000;border:1px solid #444;color:#e8e4d8;padding:12px;font:16px ui-monospace,monospace}
+button{background:#b3202a;color:#fff;border:0;padding:12px 20px;font:600 15px Georgia,serif;cursor:pointer}input:focus-visible,button:focus-visible{outline:2px solid #e8e4d8}
+#m{min-height:1.6em;margin-top:10px;color:#b3202a;font:15px ui-monospace,monospace}#c{position:fixed;inset:auto 0 0;background:#000;border-top:1px solid #b3202a;padding:14px 18px;font-size:14px}
+#c button{margin-left:10px;padding:6px 14px}@media(prefers-reduced-motion:no-preference){svg{animation:b 6s ease-in-out infinite}@keyframes b{50%{transform:scale(1.03)}}}</style></head><body><main>
+<svg viewBox="0 0 200 130" aria-hidden=true><g fill="#e8e4d8" stroke="#050506" stroke-width="2"><g id=w><path d="M98 60C70 10 20 2 6 28c-8 18 14 44 46 42-24 8-30 30-14 44 16 12 44-10 60-54z"/><circle cx=48 cy=36 r=9 fill="#050506"/><circle cx=40 cy=82 r=5 fill="#050506"/></g><use href="#w" transform="translate(200) scale(-1 1)"/><ellipse cx=100 cy=70 rx=7 ry=36 fill="#b3202a"/></g></svg>
+<h1>SİNYAL<b>-47</b></h1><div class=t>&gt; seek &gt; think &gt; question</div>
+<section class=n id=v hidden></section>
+<form id=f hidden autocomplete=off><input id=a aria-label=answer required><button id=bt></button></form><div id=m role=status></div>
+<div id=c><span id=ct></span><button id=ok></button></div></main><script>
+const D={tr:['Bu site ilerlemeni hatırlamak için rastgele bir cihaz kimliği ve IP adresinin geri döndürülemez bir özetini saklar.','Kabul et','Gönder','Yanlış. Sinyal aynı kaldı.','Çok hızlısın. Bir dakika bekle.','Sinyal burada kesiliyor. Yeni katmanlar eklenecek. Buraya ulaştın.'],
+en:['This site stores a random device ID and an irreversible hash of your IP address to remember your progress.','Accept','Submit','Wrong. The signal is unchanged.','Too fast. Wait a minute.','The signal ends here for now. New layers are coming. You made it this far.'],
+de:['Diese Seite speichert eine zufällige Geräte-ID und einen nicht umkehrbaren Hash Ihrer IP, um Ihren Fortschritt zu merken.','Akzeptieren','Senden','Falsch.','Zu schnell. Warte eine Minute.','Das Signal endet hier. Neue Ebenen folgen.'],
+fr:['Ce site stocke un identifiant d’appareil aléatoire et un hachage irréversible de votre IP pour mémoriser votre progression.','Accepter','Envoyer','Faux.','Trop vite. Attendez une minute.','Le signal s’arrête ici. De nouveaux niveaux arrivent.'],
+es:['Este sitio guarda un ID de dispositivo aleatorio y un hash irreversible de tu IP para recordar tu progreso.','Aceptar','Enviar','Incorrecto.','Demasiado rápido. Espera un minuto.','La señal termina aquí. Llegarán nuevas capas.'],
+ru:['Сайт хранит случайный ID устройства и необратимый хеш IP, чтобы запомнить ваш прогресс.','Принять','Отправить','Неверно.','Слишком быстро. Подождите минуту.','Сигнал здесь обрывается. Скоро появятся новые уровни.'],
+pt:['Este site guarda um ID de dispositivo aleatório e um hash irreversível do seu IP para lembrar seu progresso.','Aceitar','Enviar','Errado.','Rápido demais. Espere um minuto.','O sinal termina aqui. Novas camadas virão.'],
+it:['Questo sito salva un ID dispositivo casuale e un hash irreversibile del tuo IP per ricordare i progressi.','Accetta','Invia','Sbagliato.','Troppo veloce. Aspetta un minuto.','Il segnale finisce qui. Arriveranno nuovi livelli.']};
+let T=D.en,dev=localStorage.d||(localStorage.d=crypto.randomUUID());
+const fp=[navigator.userAgent,screen.width+'x'+screen.height,Intl.DateTimeFormat().resolvedOptions().timeZone,navigator.language].join('|');
+const $=i=>document.getElementById(i),P=(u,x={})=>fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({device:dev,fp,consent:1,...x})}).then(r=>r.status==429?{wait:1}:r.json());
+function show(r){if(r.lang){T=D[r.lang]||D.en;document.documentElement.lang=r.lang}$('bt').textContent=T[2];const v=r.v;$('v').hidden=false;
+if(v.end){$('v').textContent=T[5];$('f').hidden=true}else{$('v').innerHTML='<h2></h2><div></div>';$('v').firstChild.textContent=v.n+' / '+r.total+' · '+v.t;$('v').lastChild.textContent=v.b;$('f').hidden=false;$('a').value=''}}
+async function start(){$('c').hidden=true;show(await P('/api/state'))}
+const nl=(D[(navigator.language||'en').slice(0,2)]||D.en);$('ct').textContent=nl[0];$('ok').textContent=nl[1];
+if(localStorage.ok)start();$('ok').onclick=()=>{localStorage.ok=1;start()};
+$('f').onsubmit=async e=>{e.preventDefault();const r=await P('/api/answer',{a:$('a').value});$('m').textContent='';
+if(r.wait)return $('m').textContent=T[4];if(!r.ok)return $('m').textContent=T[3];show(r)};
+</script></body></html>
